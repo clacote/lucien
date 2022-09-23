@@ -20,6 +20,42 @@
             width: 50%;
         }
     </style>
+    <script language="JavaScript">
+        window.addEventListener('load', (event) => {
+            setInterval(swapColors, 10);
+        });
+
+        const colors = gradients(255, 100);
+
+        var i = 0;
+        var up = true;
+        function swapColors() {
+
+            if (up) {
+                i++;
+                if (i == (colors.length - 1)) {
+                    up = false;
+                }
+            } else {
+                i--;
+                if (i == 0) {
+                    up = true;
+                }
+            }
+
+            document.body.style.backgroundColor = colors[i];
+        }
+
+        function gradients(max, min) {
+            var array = new Array();
+            for (var i = max; i >= min; i--) {
+                const hex = i.toString(16);
+                array.push("#"+hex+hex+hex);
+            }
+            return array;
+        }
+
+    </script>
 </head>
 <body>
     <h1>LUCIEN</h1>
