@@ -25,12 +25,38 @@
         }
     </style>
     <script language="JavaScript">
+
         window.addEventListener('load', (event) => {
-            setInterval(swapColors, 10);
+            // setInterval(swapColors, 10);
+            setInterval(age, 1000);
         });
 
-        const colors = gradients(255, 100);
+        const birthday = Date.parse("2015-01-01T01:56:00");
+        var years = 0;
+        var days = 0;
+        var hours = 0;
+        var seconds = 0;
+        function age() {
+            const now = Date.now();
+            const diffInMs = now - birthday;
 
+            seconds = Math.trunc(diffInMs / 1000);
+            hours = Math.trunc(seconds / 3600);
+            days = Math.trunc(hours / 24);
+            years = Math.trunc(days / 365);
+
+            document.getElementById("seconds").innerText = format(seconds);
+            document.getElementById("hours").innerText = format(hours);
+            document.getElementById("days").innerText = format(days);
+            document.getElementById("years").innerText = format(years);
+        }
+
+        const FORMAT = new Intl.NumberFormat();
+        function format(number) {
+            return FORMAT.format(number);
+        }
+
+        const colors = gradients(255, 100);
         var i = 0;
         var up = true;
         function swapColors() {
@@ -63,6 +89,13 @@
 </head>
 <body>
     <h1>LUCIEN</h1>
+
+    <p id="age">
+        J'ai <span id="years">?</span> ans,
+        soit <span id="days">?</span> jours
+        ou <span id="hours">?</span> heures
+        ou <span id="seconds">?</span> secondes.
+    </p>
 
     <h2>Chat</h2>
     <section id="cat">
