@@ -28,32 +28,44 @@
 
         window.addEventListener('load', (event) => {
             setInterval(swapColors, 10);
-            setInterval(age, 1000);
+            setInterval(age, 50);
         });
 
         const birthday = Date.parse("2015-01-01T01:56:00");
         var years = 0;
+        var months = 0;
+        var weeks = 0;
         var days = 0;
         var hours = 0;
         var seconds = 0;
+        var milliseconds = 0;
         function age() {
             const now = Date.now();
-            const diffInMs = now - birthday;
 
-            seconds = Math.trunc(diffInMs / 1000);
-            hours = Math.trunc(seconds / 3600);
-            days = Math.trunc(hours / 24);
-            years = Math.trunc(days / 365);
+            milliseconds = now - birthday;
+            seconds = milliseconds / 1000;
+            hours = seconds / 3600;
+            days = hours / 24;
+            weeks = days / 7;
+            years = days / 365;
+            months = years * 12;
 
-            document.getElementById("seconds").innerText = format(seconds);
-            document.getElementById("hours").innerText = format(hours);
-            document.getElementById("days").innerText = format(days);
-            document.getElementById("years").innerText = format(years);
+            display("milliseconds", milliseconds);
+            display("seconds", seconds);
+            display("hours", hours);
+            display("days", days);
+            display("weeks", weeks);
+            display("months", months);
+            display("years", years);
+        }
+
+        function display(element, value) {
+            document.getElementById(element).innerText = format(value);
         }
 
         const FORMAT = new Intl.NumberFormat();
         function format(number) {
-            return FORMAT.format(number);
+            return FORMAT.format(Math.trunc(number));
         }
 
         const colors = gradients(255, 100);
@@ -92,9 +104,12 @@
 
     <p id="age">
         J'ai <span id="years">?</span> ans,
-        soit <span id="days">?</span> jours
+        soit <span id="months">?</span> mois
+        ou <span id="weeks">?</span> semaines
+        ou <span id="days">?</span> jours
         ou <span id="hours">?</span> heures
-        ou <span id="seconds">?</span> secondes.
+        ou <span id="seconds">?</span> secondes
+        ou <span id="milliseconds">?</span> millisecondes.
     </p>
 
     <h2>Chat</h2>
